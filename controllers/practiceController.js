@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min
 }
@@ -50,6 +52,20 @@ class PracticeController {
             error(res)
         } else {
             success(res, { data: getRandomNumber(0, 1_000_000) })
+        }
+    }
+    async corsProxy(req, res) {
+        if (!req.query.url) {
+            error(res, 'Empty url')
+        } else {
+            try {
+                const resp = await axios.get(req.query.url, {
+                    transformResponse: []
+                })
+                res.status(resp.status).type(resp.headers['content-type']).send(resp.data)
+            } catch (e) {
+                error(res, e.message)
+            }
         }
     }
 }
