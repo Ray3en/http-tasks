@@ -1,4 +1,5 @@
 const axios = require('axios')
+const crypto = require('crypto')
 
 const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min
@@ -53,6 +54,11 @@ class PracticeController {
         } else {
             success(res, { data: getRandomNumber(0, 1_000_000) })
         }
+    }
+    hashData(req, res) {
+        const secretKey = 'p6Wi0%|D?ho2j@XmTv}LMaN}BDd}t#FH'
+        const hash = crypto.createHmac('sha256', secretKey).update(JSON.stringify(req.body)).digest('hex')
+        success(res, { hash })
     }
     async corsProxy(req, res) {
         if (!req.query.url) {
