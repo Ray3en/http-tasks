@@ -55,10 +55,30 @@ class PracticeController {
             success(res, { data: getRandomNumber(0, 1_000_000) })
         }
     }
-    hashData(req, res) {
-        const secretKey = 'p6Wi0%|D?ho2j@XmTv}LMaN}BDd}t#FH'
-        const hash = crypto.createHmac('sha256', secretKey).update(JSON.stringify(req.body)).digest('hex')
-        success(res, { hash })
+    hashDataMp(req, res) {
+        const ct = (req.get('Content-Type') || '').toLowerCase()
+        if (!ct.startsWith('multipart/form-data;')) {
+            error(res, 'Wrong Content-Type')
+        } else {
+            const secretKey = 'p6Wi0%|D?ho2j@XmTv}LMaN}BDd}t#FH'
+            const hash = crypto
+                .createHmac('sha256', secretKey)
+                .update(JSON.stringify(req.body))
+                .digest('hex')
+            success(res, { hash })
+        }
+    }
+    hashDataJson(req, res) {
+        if ((req.get('Content-Type') || '').toLowerCase() !== 'application/json') {
+            error(res, 'Wrong Content-Type')
+        } else {
+            const secretKey = '1aJ3vy#GIOOmPZYtZ*4SR2~pF#u7Q*wz'
+            const hash = crypto
+                .createHmac('sha256', secretKey)
+                .update(JSON.stringify(req.body))
+                .digest('hex')
+            success(res, { hash })
+        }
     }
     async corsProxy(req, res) {
         if (!req.query.url) {

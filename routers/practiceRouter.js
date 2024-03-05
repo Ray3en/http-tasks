@@ -9,6 +9,7 @@ practiceRouter.post('/fd-login', PracticeController.fdLogin)
 practiceRouter.get('/balance', PracticeController.balance)
 practiceRouter.get('/cors-proxy', PracticeController.corsProxy)
 practiceRouter.get('/any-data', PracticeController.anyData)
-practiceRouter.post('/hash-data', multer().none(), PracticeController.hashData)
+practiceRouter.post('/hash-data-mp', multer().none(), PracticeController.hashDataMp)
+practiceRouter.post('/hash-data-json', PracticeController.hashDataJson)
 
 module.exports = practiceRouter
