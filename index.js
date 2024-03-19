@@ -9,7 +9,7 @@ app.use('/http', require('./routers/httpRouter'))
 app.use('/headers', require('./routers/headersRouter'))
 app.use('/regauth', require('./routers/reagauthRouter'))
 app.use('/api', require('./routers/apiRouter'))
-app.use('/example', require('./routers/exampleRouter'))
+app.use('/example', cors(), require('./routers/exampleRouter'))
 app.use('/practice', cors(), require('./routers/practiceRouter'))
 
 try {
